@@ -1,0 +1,81 @@
+﻿@model IEnumerable<FrontEndWeb.Models.SubscriptionProduct>
+
+@{
+    ViewData["Title"] = "BOIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>SubscriptionProducts</h1>
+<hr />
+
+<p>
+    <a asp-action="BOCreate">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SubscriptionTimeTicks)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SubscriptionTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubscriptionTimeTicks)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubscriptionTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @if (item.ImageUrl != null)
+                    {
+                        <img class="profilePicTiny" src=@item.ImageUrl alt="ProfilePic" />
+                    }
+                    else
+                    {
+                        <p>null</p>
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "BOEdit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "BODetails", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "BODelete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

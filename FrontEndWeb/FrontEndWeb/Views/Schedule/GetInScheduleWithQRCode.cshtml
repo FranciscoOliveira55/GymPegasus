@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "GetInScheduleWithQRCode";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model byte[]
+
+<h1>Get In Class With QRCode</h1>
+<hr />
+
+<div class="genericCardContainer flexCenterColumn">
+    @{
+        bool isDevelopment = TempData["IsDevelopment"] as bool? ?? false;
+
+        if (Model != null)
+        {
+            <div id="getIn" class="genericCardItem flexCenterColumn">
+                <h3>Get In Class QRCode</h3>
+                <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model))" />
+                @if (isDevelopment)
+                {
+                    <a class="btn btn-primary widerBtn" href=@TempData.Peek("GetInApiUrl")>TestGetInButton</a>
+                }
+            </div>
+        }
+        <div id="getIn" class="genericCardItem flexCenterColumn">
+            <a asp-controller="Schedule" asp-action="ListWeeklySchedules" class="btn btn-primary widerBtn">Back</a>
+        </div>
+    }
+</div>
+
+

@@ -1,0 +1,176 @@
+﻿@model Workout
+
+@{
+    ViewData["Title"] = "WorkoutWithPlan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Workout With Plan</h1>
+<hr />
+
+<div class="card genericCardContainer flexCenterColumn">
+    <div class="genericCardContainer flexCenterRow">
+        <div class="genericCardItem flexCenterColumn">
+            <a asp-controller="WorkoutPlan" asp-action="ListClienteWorkoutPlans" class="btn btn-primary">Back</a>
+        </div>
+        <div class="genericCardItem flexCenterColumn" style="width:100%">
+            <h2>@Model.WorkoutPlan.Name</h2>
+            <p>@Model.WorkoutPlan.Description</p>
+            <p id="timer">00:00:00</p>
+        </div>
+    </div>
+    <div class="genericCardItem flexCenterColumn hover-container">
+        @{
+            //Group WorkoutPlanExercises by ExerciseTemplate
+            var groupedExercises = Model.WorkoutExercises
+            .GroupBy(wpe => wpe.ExerciseTemplate)
+            .Select(group => new
+            {
+                ExerciseTemplate = group.Key as ExerciseTemplate,
+                WorkoutExercises = group.ToList() as IEnumerable<WorkoutExercise>
+            });
+        }
+
+        <form id="myForm" asp-controller="Workout" asp-action="Create" asp-route-controllerRedirect="WorkoutPlan" asp-route-actionRedirect="ListClienteWorkoutPlans" method="post" onsubmit="setHourEnd()">
+
+            <input type="hidden" asp-for="Id" value="@Model.Id" />
+            <input type="hidden" asp-for="ClienteId" value="@Model.ClienteId" />
+            <input type="hidden" asp-for="HourInit" value="@Model.HourInit" />
+            <input id="hourEndField" type="hidden" asp-for="HourEnd" value="" />
+            <input type="hidden" asp-for="WorkoutPlanId" value="@Model.WorkoutPlanId" />
+            @{
+                var index = 0;
+            }
+
+            @foreach (var exerciseGroup in groupedExercises)
+            {
+                <h3>@exerciseGroup.ExerciseTemplate.Name</h3>
+                @*
+            <div class="hidden-button">
+            <p><b>Exercise Description:</b> @exerciseGroup.ExerciseTemplate.Description</p>
+            </div>
+            *@
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Serie</th>
+                            <th>Planned</th>
+                            <th>@exerciseGroup.ExerciseTemplate.EffortUnit</th>
+                            <th>@exerciseGroup.ExerciseTemplate.RepeatUnit</th>
+                            <th>Done</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var serie = 1;
+                        }
+                        @foreach (var workoutExercise in exerciseGroup.WorkoutExercises)
+                        {
+                            <tr>
+                                <input type="hidden" asp-for="WorkoutExercises[index].WorkoutId" value="@workoutExercise.WorkoutId" />
+                                <input type="hidden" asp-for="WorkoutExercises[index].Id" value="@workoutExercise.Id" />
+                                <input type="hidden" asp-for="WorkoutExercises[index].ExerciseTemplateId" value="@workoutExercise.ExerciseTemplateId" />
+                                <td>
+                                    @serie
+                                </td>
+                                <td>
+                                    @if (workoutExercise.Effort != null)
+                                    {
+                                        <span>@workoutExercise.Effort@workoutExercise.ExerciseTemplate.EffortUnit</span>
+
+                                        @if (workoutExercise.Repeat != null)
+                                        {
+                                            <span> * </span>
+                                        }
+                                    }
+                                    @if (workoutExercise.Repeat != null)
+                                    {
+                                        <span>@workoutExercise.Repeat@workoutExercise.ExerciseTemplate.RepeatUnit</span>
+                                    }
+                                </td>
+                                <td>
+                                    <input class="form-control" type="number" asp-for="WorkoutExercises[index].Effort" value="@workoutExercise.Effort" />
+                                </td>
+                                <td>
+                                    <input class="form-control" type="number" asp-for="WorkoutExercises[index].Repeat" value="@workoutExercise.Repeat" />
+                                </td>
+                                <td>
+                                    <input type="checkbox" asp-for="WorkoutExercises[index].Done" value="true" />
+                                </td>
+                            </tr>
+                            serie++;
+                            index++;
+                        }
+                    </tbody>
+                </table>
+            }
+            <div class="flexCenterRow">
+                <input type="submit" value="Terminar Treino" class="btn btn-primary widerBtn" />
+            </div>
+        </form>
+    </div>
+
+</div>
+
+
+
+<script>
+    //Sets Timer
+    let timerInterval;
+    let seconds = 0, minutes = 0, hours = 0;
+
+    function updateTimer() {
+        seconds++;
+        if (seconds >= 60) {
+            seconds = 0;
+            minutes++;
+            if (minutes >= 60) {
+                minutes = 0;
+                hours++;
+            }
+        }
+
+        const formattedTime =
+            `${(hours < 10 ? '0' : '') + hours}:` +
+            `${(minutes < 10 ? '0' : '') + minutes}:` +
+            `${(seconds < 10 ? '0' : '') + seconds}`;
+
+        document.getElementById('timer').innerText = formattedTime;
+    }
+
+    setInterval(updateTimer, 1000); // Update every second (1000 milliseconds)
+
+
+
+    //Sets HourEnd of the Training
+    function setHourEnd() {
+        // Get the current date and time
+        var currentDateTime = new Date().toISOString();
+
+        // Set the value of the hidden field 'hourEndField' to the current date and time
+        document.getElementById('hourEndField').value = currentDateTime;
+        return true; // Allows the form submission to proceed
+    }
+
+
+
+    //Sets warning leaving the page without submitting the form
+    let formIsSubmitted = false;
+    // Add event listener for form submission
+    document.getElementById('myForm').addEventListener('submit', function () {
+        formIsSubmitted = true; // Set the flag to true when the form is submitted
+    });
+
+    // Event listener for beforeunload
+    window.addEventListener('beforeunload', function (e) {
+        if (!formIsSubmitted) {
+            e.preventDefault(); // Cancel the event to display the confirmation dialog
+            e.returnValue = ''; // For some browsers
+
+            // Display a warning message
+            const confirmationMessage = 'Are you sure you want to leave this page? Changes you made may not be saved.';
+            e.returnValue = confirmationMessage; // For some browsers
+            return confirmationMessage; // For modern browsers
+        }
+    });
+</script>

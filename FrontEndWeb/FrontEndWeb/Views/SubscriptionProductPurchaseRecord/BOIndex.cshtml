@@ -1,0 +1,66 @@
+﻿@model IEnumerable<FrontEndWeb.Models.SubscriptionProductPurchaseRecord>
+
+@{
+    ViewData["Title"] = "BOIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>PurchaseRecords</h1>
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PurchaseDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PurchasePrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PurchaseTimeTicks)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PurchaseTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClienteId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SubscriptionProductId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PurchaseDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PurchasePrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PurchaseTimeTicks)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PurchaseTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClienteId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubscriptionProductId)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

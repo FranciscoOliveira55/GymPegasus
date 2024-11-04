@@ -1,0 +1,56 @@
+﻿@model FrontEndWeb.Models.Schedule
+
+@{
+    ViewData["Title"] = "BOCreate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>BOCreate</h1>
+
+<h4>Schedule</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="BOCreate">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Room" class="control-label"></label>
+                <input asp-for="Room" class="form-control" />
+                <span asp-validation-for="Room" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HourInit" class="control-label"></label>
+                <input asp-for="HourInit" class="form-control" />
+                <span asp-validation-for="HourInit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HourEnd" class="control-label"></label>
+                <input asp-for="HourEnd" class="form-control" />
+                <span asp-validation-for="HourEnd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaxCapacity" class="control-label"></label>
+                <input asp-for="MaxCapacity" class="form-control" />
+                <span asp-validation-for="MaxCapacity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EventId" class="control-label"></label>
+                <input asp-for="EventId" class="form-control" />
+                <span asp-validation-for="EventId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmployeeID" class="control-label"></label>
+                <input asp-for="EmployeeID" class="form-control" />
+                <span asp-validation-for="EmployeeID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="BOIndex">Back to List</a>
+</div>
+

@@ -1,0 +1,86 @@
+﻿@using FrontEndWeb.Models.DTOs;
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@model WorkoutPlan
+
+@{
+    ViewData["Title"] = "ListWorkoutPlanExercises";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>WorkoutPlan Exercises</h1>
+<hr />
+
+<div class="card genericCardContainer flexCenterColumn">
+    <div class="genericCardContainer flexWrap flexCenterRow" style="justify-content:space-between">
+        <div class="genericCardItem flexCenterColumn" style="justify-self:left">
+            <a asp-controller="WorkoutPlan" asp-action="ListClienteWorkoutPlans" class="btn btn-primary">Back</a>
+        </div>
+        <div class="genericCardItem flexCenterColumn">
+            <h2>@Html.DisplayFor(modelItem => Model.Name)</h2>
+            <p>@Html.DisplayFor(modelItem => Model.Description)</p>
+        </div>
+        <div class="genericCardItem flexCenterColumn">
+            <a asp-controller="Workout" asp-action="StartWorkoutWithPlan" class="btn btn-primary">Start Workout</a>
+        </div>
+    </div>
+    <div class="genericCardContainer flexCenterColumn">
+        @{
+            //Group WorkoutPlanExercises by ExerciseTemplate
+            var groupedExercises = Model.WorkoutPlanExercises
+            .GroupBy(wpe => wpe.ExerciseTemplate)
+            .Select(group => new
+            {
+                ExerciseTemplate = group.Key as ExerciseTemplate,
+                WorkoutPlanExercises = group.ToList() as IEnumerable<WorkoutPlanExercise>
+            });
+        }
+        @foreach (var exerciseGroup in groupedExercises)
+        {
+            <div class="genericCardItem flexCenterColumn hover-container">
+                <h3>@exerciseGroup.ExerciseTemplate.Name</h3>
+                <div class="hidden-button">
+                    <p><b>Description:</b> @exerciseGroup.ExerciseTemplate.Description</p>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Serie</th>
+                            @if (exerciseGroup.WorkoutPlanExercises.Any(e => e.Effort != null))
+                            {
+                                <th>@exerciseGroup.ExerciseTemplate.EffortUnit</th>
+                            }
+                            @if (exerciseGroup.WorkoutPlanExercises.Any(e => e.Repeat != null))
+                            {
+                                <th>@exerciseGroup.ExerciseTemplate.RepeatUnit</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var serie = 1;
+                        }
+                        @foreach (var workoutPlanExercise in exerciseGroup.WorkoutPlanExercises)
+                        {
+                            <tr>
+                                <td>@serie</td>
+                                @if (workoutPlanExercise.Effort != null)
+                                {
+                                    <td>@workoutPlanExercise.Effort</td>
+                                }
+                                @if (workoutPlanExercise.Repeat != null)
+                                {
+                                    <td>@workoutPlanExercise.Repeat</td>
+                                }
+                            </tr>
+                            serie++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+
+</div>
+
+

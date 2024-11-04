@@ -1,0 +1,43 @@
+﻿@model IEnumerable<SubscriptionProduct>
+
+@{
+    ViewData["Title"] = "ListSubscriptions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="display:flex; flex-direction:row;">
+    @await Html.PartialAsync("Partial/_ProfileNavigationMenu")
+
+    <div>
+        <h1>MyAccount</h1>
+        <h4>Subscriptions</h4>
+        <hr />
+        <div class="genericCardContainer flexCenterRow flexWrap">
+            @{
+                var euro = "\u20AC";
+                foreach (SubscriptionProduct subscriptionProduct in Model)
+                {
+                    <div class="genericCardItem flexCenterColumn" style="margin-right:50px">
+
+                        <h1>Subscription</h1>
+                        <img class="profilePic img-thumbnail" alt="Subscription Pic" src="@subscriptionProduct.ImageUrl" />
+
+                        <h1>@subscriptionProduct.Title.Split("Subscription ").Last()</h1>
+                        <h2>@(subscriptionProduct.Price/100)@euro</h2>
+
+                        <a asp-controller="SubscriptionProduct" asp-action="Checkout" asp-route-id="@subscriptionProduct.Id">
+                            <div class="btn btn-primary widerBtn">
+                                Buy
+                            </div>
+                        </a>
+                    </div>
+                }
+            }
+        </div>
+        <div class="card genericCardItem flexCenterRow">
+            <a asp-controller="SubscriptionProductPurchaseRecord" asp-action="ProfilePurchaseRecords" class="btn btn-primary">Purchase Records</a>
+        </div>
+    </div>
+</div>
+
+

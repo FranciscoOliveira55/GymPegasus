@@ -1,0 +1,49 @@
+﻿@model Review
+@{
+    ViewData["Title"] = "Create Review";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h1>Add Review</h1>
+    <h4>Edit Review</h4>
+
+    <hr />
+
+    <form asp-controller="Review" asp-action="Create" asp-route-controllerRedirect="Employee" asp-route-actionRedirect="ListInstructorReviews" asp-route-idRedirect=@Model.EmployeeId>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <input type="hidden" asp-for="ClienteId" class="form-control" />
+        <input type="hidden" asp-for="EmployeeId" class="form-control" />
+        <input type="hidden" asp-for="DateTime" class="form-control" />
+
+        <table class="table">
+            <tbody> 
+                <tr>
+                    <th>
+                        <label asp-for="Classification" class="control-label"></label>
+                    </th>
+                    <td>                      
+                        <input asp-for="Classification" class="form-control" type="number" min="0" max="5" />
+                        <span asp-validation-for="Classification" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label asp-for="Description" class="control-label"></label>
+                    </th>
+                    <td>
+                        <textarea asp-for="Description" class="form-control"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="display:flex-row">
+            <a asp-controller="Employee" asp-action="ListInstructorReviews" asp-route-id="@Model.EmployeeId" class="btn btn-primary widerBtn">Back</a>
+            <input type="submit" value="Save" class="btn btn-primary widerBtn" />
+        </div>
+    </form>
+</div>
+
+

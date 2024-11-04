@@ -1,0 +1,68 @@
+﻿@model FrontEndWeb.Models.Cliente
+
+@{
+    ViewData["Title"] = "BOEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>BOEdit</h1>
+
+<h4>Client</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="BOEdit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" class="form-control" />
+
+            <div class="form-group">
+                <label asp-for="ClienteName" class="control-label"></label>
+                <input asp-for="ClienteName" class="form-control" />
+                <span asp-validation-for="ClienteName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nif" class="control-label"></label>
+                <input asp-for="Nif" class="form-control" />
+                <span asp-validation-for="Nif" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SubscriptionExpiration" class="control-label"></label>
+                <input asp-for="SubscriptionExpiration" class="form-control" />
+                <span asp-validation-for="SubscriptionExpiration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BirthDate" class="control-label"></label>
+                <input asp-for="BirthDate" class="form-control" />
+                <span asp-validation-for="BirthDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label"></label>
+                <input asp-for="Gender" class="form-control" />
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageUrl" class="control-label"></label>
+                <input asp-for="ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Motto" class="control-label"></label>
+                <input asp-for="Motto" class="form-control" />
+                <span asp-validation-for="Motto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <input asp-for="UserId" class="form-control" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="BOIndex">Back to List</a>
+</div>
+

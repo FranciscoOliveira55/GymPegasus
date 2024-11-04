@@ -1,0 +1,51 @@
+﻿@model IEnumerable<FrontEndWeb.Models.GetInOut>
+
+@{
+    ViewData["Title"] = "BOIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>GetInOuts</h1>
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GetInOutType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClienteId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GetInOutType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClienteId)
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "BODelete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

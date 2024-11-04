@@ -1,0 +1,35 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div style="justify-content: center; margin-right: 60px; margin-top: 80px;">
+    <div class="list-group">
+        <a asp-controller="User" asp-action="Profile"
+           class="list-group-item list-group-item-action
+           @(ViewContext.RouteData.Values["controller"].ToString() == "User" ? "active" : "")"
+           aria-current="true">
+            User Profile
+        </a>
+        <a asp-controller="Cliente" asp-action="Profile"
+           class="list-group-item list-group-item-action
+           @(ViewContext.RouteData.Values["controller"].ToString() == "Cliente" ? "active" : "")"
+           aria-current="true">
+            Client Profile
+        </a>
+        <a asp-controller="SubscriptionProduct" asp-action="ListSubscriptionProducts"
+           class="list-group-item list-group-item-action
+           @((ViewContext.RouteData.Values["controller"].ToString() == "SubscriptionProduct"
+           || ViewContext.RouteData.Values["controller"].ToString() == "SubscriptionProductPurchaseRecord") ? "active" : "")">
+            Subscriptions
+        </a>
+    </div>
+    @*
+    <h1>Route Values:</h1>
+    <ul>
+    @foreach (var routeValue in ViewContext.RouteData.Values)
+    {
+    <li>@routeValue.Key: @routeValue.Value</li>
+    }
+    </ul> *@
+</div>

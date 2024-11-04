@@ -1,0 +1,91 @@
+﻿@model IEnumerable<Workout>
+
+@{
+    ViewData["Title"] = "ListWorkouts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>My Workouts</h1>
+
+<div class="card genericCardContainer flexCenterRow flexWrap">
+    @if (Model.Any())
+    {
+        @foreach (Workout workout in Model.OrderByDescending(w => w.HourEnd))
+        {
+            <div class="genericCardItem flexCenterColumn  hover-container">
+                @if(workout.WorkoutPlan != null){
+                    <h2>@Html.DisplayFor(modelItem => workout.WorkoutPlan.Name)</h2>
+                }
+                <p>@workout.HourEnd.ToString("dddd, dd MMMM")</p>
+
+                <div class="flexCenterRow">
+                    <div class="genericCardItem flexCenterRow" style="margin-top:0">
+                        <img class="tinyIcon" src="~/images/timerIcon.png" />
+                        @{
+                            //Workout Duration
+                            TimeSpan timeSpan = workout.HourEnd - workout.HourInit;
+                            string h = "h", min = "min";
+
+                            if (timeSpan.Hours > 0)
+                            {
+                                <span>@timeSpan.Hours@h</span>
+                                if (timeSpan.Minutes > 0)
+                                {
+                                    <span>@timeSpan.Minutes@min</span>
+                                }
+                            }
+                            else
+                            {
+                                if (timeSpan.Minutes > 0)
+                                {
+                                    <span>@timeSpan.Minutes@min</span>
+                                }
+                                else
+                                {
+                                    <span>1min</span>
+                                }
+                            }
+                        }
+                    </div>
+                    @{
+                        //Total Workout Effort Made
+                        int totalKG = 0;
+                        string Kg = "Kg";
+
+                        //Only weight exercises have both effort and repeats (reps) ... non weight exercises have either one or other, not both
+                        if (workout.WorkoutExercises != null && workout.WorkoutExercises.Any())
+                        {
+                            foreach (WorkoutExercise workoutExercise in workout.WorkoutExercises)
+                            {
+                                if (workoutExercise.Done && workoutExercise.Effort != null && workoutExercise.Repeat != null)
+                                {
+                                    var exerciseTotalKg = workoutExercise.Effort * workoutExercise.Repeat;
+                                    totalKG += (int)exerciseTotalKg;
+                                }
+                            }
+                        }
+                        if (totalKG != 0)
+                        {
+                            <div class="genericCardItem flexCenterRow" style="margin-top:0">
+                                <img class="tinyIcon" src="~/images/weightIcon.png" />
+                                <span>@totalKG@Kg</span>
+                            </div>
+                        }
+                    }
+                </div>
+                @*
+        <a asp-controller="Workout" asp-action="ListWorkoutExercises" asp-route-id="@workout.Id" class="btn btn-primary hidden-button">Details</a>
+        *@
+            </div>
+        }
+    }
+    else
+    {
+        <div class="genericCardItem flexCenterColumn">
+            <h4>You Don't have any Workouts</h4>
+        </div>
+    }
+</div>
+<div class="card genericCardItem flexCenterRow">
+    <a asp-controller="WorkoutPlan" asp-action="ListClienteWorkoutPlans" class="btn btn-primary">Back</a>
+</div>

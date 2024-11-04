@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <img width="10%" src="~/images/logo3.jpg" />
+    <h1 class="display-4">Pegasus Gym</h1>
+
+    <div class="homeItemRowContainer">
+        <a asp-controller="GetInOut" asp-action="CheckPointGetInOut">
+            <div class="homeItem">GetInOut</div>
+        </a>
+        <a asp-controller="WorkoutPlan" asp-action="ListClienteWorkoutPlans">
+            <div class="homeItem">Train</div>
+        </a>
+    </div>
+    <div class="homeItemRowContainer">
+        <a asp-controller="Schedule" asp-action="ListWeeklySchedules">
+            <div class="homeItem">Classes</div>
+        </a>
+        <a asp-controller="Employee" asp-action="ListInstructors">
+            <div class="homeItem">Instructors</div>
+        </a>
+    </div>
+    <div class="homeItemRowContainer">
+        <a asp-controller="User" asp-action="Profile">
+            <div class="homeItem">Account</div>
+        </a>
+        @*         
+        //Not Implemented
+        <a asp-controller="" asp-action="">
+        <div class="homeItem">Stats</div>
+        </a> *@
+    </div>
+</div>

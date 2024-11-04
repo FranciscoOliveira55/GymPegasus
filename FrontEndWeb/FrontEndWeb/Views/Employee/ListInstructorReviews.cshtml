@@ -1,0 +1,118 @@
+﻿@model Employee
+
+@{
+    ViewData["Title"] = "ListInstructorReviews";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>List of @Model.EmployeeName's Reviews</h1>
+<hr />
+
+<div class="card genericCardContainer flexCenterColumn flexWrap">
+    <div class="genericCardItem flexCenterRow flexWrap">
+        @if (@Model.ImageUrl != null)
+        {
+            <img class="largeProfilePic img-thumbnail" alt="Profile Pic" src=@Model.ImageUrl />
+        }
+        else
+        {
+            <img class="largeProfilePic img-thumbnail" alt="Profile Pic" src="~/images/profilePlaceholder.jpg" />
+        }
+        <div class="flexCenterColumn">
+            <div class="genericCardItem flexCenterColumn flexWrap">
+                <h2>
+                    @Html.DisplayFor(modelItem => @Model.EmployeeName)
+                </h2>
+                <p>@Model.Motto</p>
+
+                <div class="genericCardItem flexCenterColumn">
+                    <h2>Rating</h2>
+                    <div class="flexCenterRow">
+                        @{
+                            double total = 0;
+                            double count = 0;
+                            double average = 0;
+
+                            if (Model.Reviews != null && Model.Reviews.Any())
+                            {
+                                foreach (Review review in Model.Reviews)
+                                {
+                                    total += review.Classification;
+                                    count += 1;
+                                }
+                                if (count != 0)
+                                    average = total / count;
+
+                                for (int i = 0; i < average; i++)
+                                {
+                                    <span class="fa fa-star checked"></span>
+                                }
+                            }
+                        }
+                    </div>
+                    <h3>@average.ToString("F1")</h3>
+                </div>
+            </div>
+            <div class="flexCenterRow">
+                <a asp-controller="Employee" asp-action="ListInstructors" class="btn btn-primary widerBtn" style="margin-right: 20px">Back</a>
+                @{
+                    TempData.Keep("employeeId");
+                }
+                <a asp-controller="Review" asp-action="Create" class="btn btn-success widerBtn">Add Review</a>
+            </div>
+        </div>
+    </div>
+    @foreach (Review review in Model.Reviews)
+    {
+        <div class="card genericCardContainer flexCenterRow flexWrap">
+            <div class="genericCardItem flexCenterRow">
+                @if (review.Cliente != null && review.Cliente.ImageUrl != null)
+                {
+                    <img class="profilePicTiny img-thumbnail" alt="Profile Pic" src=@review.Cliente.ImageUrl />
+                }
+                else
+                {
+                    <img class="profilePicTiny img-thumbnail" alt="Profile Pic" src="~/images/profilePlaceholder.jpg" />
+                }
+                <div class="flexCenterColumn" style="margin:10px">
+                    @if (review.Cliente != null && review.Cliente.ClienteName != null)
+                    {
+                        <h3>@Html.DisplayFor(modelItem => review.Cliente.ClienteName)</h3>
+                    }
+                    else
+                    {
+                        <h3>#user</h3>
+                    }
+                    @{
+                        //Format Date so that only shows date and not time
+                        DateTime dateToDisplay = review.DateTime;
+                        string formattedDate = dateToDisplay.ToString("dd/MM/yyyy");
+                    }
+                    <p>@formattedDate</p>
+                </div>
+            </div>
+            @if (!string.IsNullOrWhiteSpace(review.Description))
+            {
+                <div class="genericCardItem flexCenterColumn">
+                    <p>
+                        @Html.DisplayFor(modelItem => review.Description)
+                    </p>
+                </div>
+            }
+            <div class="genericCardItem flexCenterColumn">
+                <h2>Rating</h2>
+                <div class="flexCenterRow">
+                    @for (int i = 0; i < review.Classification; i++)
+                    {
+                        <span class="fa fa-star checked"></span>
+                    }
+                </div>
+                <h3>
+                    @Html.DisplayFor(modelItem => review.Classification)
+                </h3>
+            </div>
+        </div>
+    }
+</div>
+
+

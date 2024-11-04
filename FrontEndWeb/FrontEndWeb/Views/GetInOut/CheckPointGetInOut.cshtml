@@ -1,0 +1,64 @@
+﻿@using FrontEndWeb.Models.DTOs;
+@model GetInOutQRCodeToViewDTO;
+@{
+    ViewData["Title"] = "CheckPointGetInOut";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1>CheckPoint GetInOut</h1>
+<hr />
+<div class="genericCardItem flexCenterColumn">
+    @{
+
+        if (Model != null)
+        {
+            <input type="checkbox"
+                   id="toggleGetInOut"
+                   data-size="normal"
+                   data-style="slow"
+                   data-onstyle="success"
+                   data-offstyle="warning"
+                   data-toggle="toggle"
+                   data-on='<b>Get In</b><img class="tinyIcon2" src="/images/entranceIcon.png" />'
+                   data-off='<b>Get Out</b><img class="tinyIcon2" src="/images/exitIcon.png" />'
+                   onchange="toggleGetInOut()"
+                   checked>
+
+            <script>
+                function toggleGetInOut() {
+                    var toggleButton = document.getElementById("toggleGetInOut");
+                    var getInDiv = document.getElementById("getIn");
+                    var getOutDiv = document.getElementById("getOut");
+
+                    if (toggleButton.checked) {
+                        getInDiv.style.display = "flex";
+                        getOutDiv.style.display = "none";
+                    } else {
+                        getInDiv.style.display = "none";
+                        getOutDiv.style.display = "flex";
+                    }
+                }
+            </script>
+
+            bool isDevelopment = TempData["IsDevelopment"] as bool? ?? false;
+
+            <div id="getIn" class="genericCardItem flexCenterColumn">
+                <h3>GetIn QRCode</h3>
+                <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.GetInQRCode))" />
+                @if (isDevelopment)
+                {
+                    <a class="btn btn-primary widerBtn" href=@TempData.Peek("GetInApiUrl")>TestGetInButton</a>
+                }
+            </div>
+            <div id="getOut" class="genericCardItem flexCenterColumn" style="display: none;">
+                <h3>GetOut QRCode</h3>
+                <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.GetOutQRCode))" />
+                @if (isDevelopment)
+                {
+                    <a class="btn btn-primary widerBtn" href=@TempData.Peek("GetOutApiUrl")>TestGetOutButton</a>
+                }
+            </div>
+        }
+    }
+</div>

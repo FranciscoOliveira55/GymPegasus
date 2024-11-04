@@ -1,0 +1,41 @@
+﻿@using FrontEndWeb.Models.DTOs;
+@model UserQueryDTO
+
+@{
+    ViewData["Title"] = "UserProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div style="display:flex; flex-direction:row; min-width:max-content">
+    @await Html.PartialAsync("Partial/_ProfileNavigationMenu")
+
+    <div>
+        <h1>MyAccount</h1>
+        <h4>User Profile</h4>
+        <hr />
+
+        <div class="flexCenterRow">
+            <table class="table ">
+                <tbody>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(model => model.UserName)</th>
+                        <td>@Html.DisplayFor(model => model.UserName)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(model => model.Email)</th>
+                        <td>@Html.DisplayFor(model => model.Email)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(model => model.PhoneNumber)</th>
+                        <td>@Html.DisplayFor(model => model.PhoneNumber)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <a asp-controller="User" asp-action="EditProfile" class="btn btn-primary widerBtn">Edit</a>
+        </div>
+    </div>
+</div>
+

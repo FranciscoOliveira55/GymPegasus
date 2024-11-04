@@ -1,0 +1,62 @@
+﻿@model IEnumerable<FrontEndWeb.Models.WorkoutPlan>
+
+@{
+    ViewData["Title"] = "BOIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>WorkoutPlans</h1>
+<hr />
+
+<p>
+    <a asp-action="BOCreate">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClienteId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClienteId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "BOEdit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "BODetails", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "BODelete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

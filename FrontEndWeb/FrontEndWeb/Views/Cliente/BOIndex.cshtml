@@ -1,0 +1,103 @@
+﻿@model IEnumerable<FrontEndWeb.Models.Cliente>
+
+@{
+    ViewData["Title"] = "BOIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Clients</h1>
+<hr />
+
+<p>
+    <a asp-action="BOCreate">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClienteName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nif)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SubscriptionExpiration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BirthDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Motto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClienteName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nif)
+                </td>
+                <td>
+                    @if (item.SubscriptionExpiration != null)
+                    {
+                        DateTime dateToDisplay = (DateTime)item.SubscriptionExpiration;
+                        string formattedDate = dateToDisplay.ToString("dd/MM/yyyy HH:mm:ss");
+                        @formattedDate
+                    }
+                </td>
+                <td>
+                    @if (item.BirthDate != null)
+                    {
+                        DateTime dateToDisplay = (DateTime)item.BirthDate;
+                        string formattedDate = dateToDisplay.ToString("dd/MM/yyyy");
+                        @formattedDate
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
+                    @if (item.ImageUrl != null)
+                    {
+                        <img class="profilePicTiny" src=@item.ImageUrl alt="ProfilePic" />
+                    }
+                    else
+                    {
+                        <p>null</p>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Motto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "BOEdit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "BODetails", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "BODelete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

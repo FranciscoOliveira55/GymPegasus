@@ -1,0 +1,74 @@
+﻿@model IEnumerable<FrontEndWeb.Models.Schedule>
+
+@{
+    ViewData["Title"] = "BOIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Schedules</h1>
+<hr />
+
+<p>
+    <a asp-action="BOCreate">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Room)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HourInit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HourEnd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaxCapacity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeID)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HourInit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HourEnd)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaxCapacity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeID)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "BOEdit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "BODetails", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "BODelete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

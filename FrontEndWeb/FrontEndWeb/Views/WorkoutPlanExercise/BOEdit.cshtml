@@ -1,0 +1,48 @@
+﻿@model FrontEndWeb.Models.WorkoutPlanExercise
+
+@{
+    ViewData["Title"] = "BOEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>BOEdit</h1>
+
+<h4>WorkoutPlanExercise</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="BOEdit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" class="form-control" />
+
+            <div class="form-group">
+                <label asp-for="WorkoutPlanId" class="control-label"></label>
+                <input asp-for="WorkoutPlanId" class="form-control" />
+                <span asp-validation-for="WorkoutPlanId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Effort" class="control-label"></label>
+                <input asp-for="Effort" class="form-control" />
+                <span asp-validation-for="Effort" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Repeat" class="control-label"></label>
+                <input asp-for="Repeat" class="form-control" />
+                <span asp-validation-for="Repeat" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExerciseTemplateId" class="control-label"></label>
+                <input asp-for="ExerciseTemplateId" class="form-control" />
+                <span asp-validation-for="ExerciseTemplateId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="BOIndex">Back to List</a>
+</div>
+

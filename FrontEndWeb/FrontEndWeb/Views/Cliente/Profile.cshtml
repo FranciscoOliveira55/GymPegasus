@@ -1,0 +1,73 @@
+﻿@model Cliente
+
+@{
+    ViewData["Title"] = "ClienteProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div style="display:flex; flex-direction:row; min-width:max-content">
+    @await Html.PartialAsync("Partial/_ProfileNavigationMenu")
+
+    <div>
+        <h1>MyAccount</h1>
+        <h4>Client Profile</h4>
+        <hr />
+
+        <div class="flexCenterRow">
+            <table class="table ">
+                <tbody>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(model => model.ClienteName)</th>
+                        <td>@Html.DisplayFor(model => model.ClienteName)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(model => model.Nif)</th>
+                        <td>@Html.DisplayFor(model => model.Nif)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(model => model.BirthDate)</th>
+                        <td>
+                            @if (Model.BirthDate != null)
+                            {
+                                DateTime dateToDisplay = (DateTime)Model.BirthDate;
+                                string formattedDate = dateToDisplay.ToString("dd/MM/yyyy");
+                                @formattedDate
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(model => model.Gender)</th>
+                        <td>@Html.DisplayFor(model => model.Gender)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(model => model.Motto)</th>
+                        <td>@Html.DisplayFor(model => model.Motto)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(model => model.SubscriptionExpiration)</th>
+                        <td>
+                            @if (Model.SubscriptionExpiration != null)
+                            {
+                                DateTime dateToDisplay = (DateTime)Model.SubscriptionExpiration;
+                                string formattedDate = dateToDisplay.ToString("dd/MM/yyyy HH:mm:ss");
+                                @formattedDate
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            @if (Model.ImageUrl != null)
+            {
+                <img class="largeProfilePic img-thumbnail" alt="Profile Pic" src=@Model.ImageUrl />
+            }
+            else
+            {
+                <img class="largeProfilePic img-thumbnail" alt="Profile Pic" src="~/images/profilePlaceholder.jpg" />
+            }
+        </div>
+        <div>
+            <a asp-controller="Cliente" asp-action="EditProfile" class="btn btn-primary widerBtn">Edit</a>
+        </div>
+    </div>
+</div>

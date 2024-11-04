@@ -1,0 +1,70 @@
+﻿@model IEnumerable<FrontEndWeb.Models.Employee>
+
+@{
+    ViewData["Title"] = "ListInstructors";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>List of Instructors</h1>
+<hr />
+@if (Model.Any())
+{
+    @foreach (Employee employee in Model)
+    {
+        <div class="card genericCardContainer flexCenterRow flexWrap">
+            <div class="genericCardItem">
+                @if (employee.ImageUrl != null)
+                {
+                    <img class="profilePic img-thumbnail" alt="Profile Pic" src=@employee.ImageUrl />
+                }
+                else
+                {
+                    <img class="profilePic img-thumbnail" alt="Profile Pic" src="~/images/profilePlaceholder.jpg" />
+                }
+            </div>
+            <div class="genericCardItem flexCenterColumn">
+                <h2>
+                    @Html.DisplayFor(modelItem => employee.EmployeeName)
+                </h2>
+                <p>@employee.Motto</p>
+            </div>
+            <div class="genericCardItem flexCenterColumn hover-container">
+                <h2>Rating</h2>
+                <div class="flexCenterRow">
+                    @{
+                        double total = 0;
+                        double count = 0;
+
+                        foreach (Review review in employee.Reviews)
+                        {
+                            total += review.Classification;
+                            count += 1;
+                        }
+                        double average = 0;
+                        if (count != 0)
+                            average = total / count;
+
+                        for (int i = 0; i < average; i++)
+                        {
+                            <span class="fa fa-star checked"></span>
+                        }
+                    }
+                </div>
+                <h3>@average.ToString("F1")</h3>
+                <a asp-controller="Employee" asp-action="ListInstructorReviews" asp-route-id="@employee.Id" class="btn btn-primary hidden-button">See Reviews</a>
+            </div>
+            <div class="genericCardItem flexCenterColumn hover-container">
+                <img class="smallIcon img-thumbnail" style="margin:10px;" alt="WhatsApp Pic" src="~/images/whatsapp-icon.png" />
+                <a href="https://wa.me/@employee.User.PhoneNumber" target="_blank" class="btn btn-success hidden-button">Contactar</a>
+            </div>
+        </div>
+
+    }
+
+}
+else
+{
+    <div class="genericCardItem flexCenterColumn">
+        <h4>No Instructor is Avaiable</h4>
+    </div>
+}

@@ -1,0 +1,33 @@
+version: '3.4'
+
+networks:
+  backendnetwork:
+
+services:
+#  backendbd:
+#    container_name: app-db
+#    image: mcr.microsoft.com/mssql/server:2019-latest
+#    ports:
+#      - 8002:1433
+#    environment:
+#      - ACCEPT_EULA=Y
+#      - MSSQL_SA_PASSWORD=Password@12345#
+#    networks:
+#      - backendnetwork
+  backend:
+    container_name: app-webapi
+    image: ${DOCKER_REGISTRY-}backend
+    build:
+      context: .
+      dockerfile: BackEnd/Dockerfile
+    ports:
+      - 8001:80
+#    depends_on:
+#      - backendbd
+    environment:
+      - DB_HOST=sqlserverlds
+      - DB_NAME=GymDB
+      - DB_MSSQL_USER=admin1
+      - DB_MSSQL_SA_PASSWORD=Password@12345#
+    networks:
+      - backendnetwork

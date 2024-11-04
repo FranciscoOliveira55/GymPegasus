@@ -1,0 +1,83 @@
+﻿@model FrontEndWeb.Models.Cliente
+
+@{
+    ViewData["Title"] = "BODetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>BODetails</h1>
+
+<div>
+    <h4>Client</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ClienteName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ClienteName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nif)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nif)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SubscriptionExpiration)
+        </dt>
+        <dd class = "col-sm-10">
+            @if (Model.SubscriptionExpiration != null)
+            {
+                DateTime dateToDisplay = (DateTime)Model.SubscriptionExpiration;
+                string formattedDate = dateToDisplay.ToString("dd/MM/yyyy HH:mm:ss");
+                @formattedDate
+            }
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @if (Model.BirthDate != null)
+            {
+                DateTime dateToDisplay = (DateTime)Model.BirthDate;
+                string formattedDate = dateToDisplay.ToString("dd/MM/yyyy HH:mm:ss");
+                @formattedDate
+            }
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ImageUrl)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Motto)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Motto)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "BOEdit", new { id = Model.Id }) |
+    <a asp-action="BOIndex">Back to List</a>
+</div>

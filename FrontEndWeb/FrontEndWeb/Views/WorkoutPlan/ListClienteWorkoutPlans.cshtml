@@ -1,0 +1,34 @@
+﻿@model IEnumerable<WorkoutPlan>
+
+@{
+    ViewData["Title"] = "ListWorkoutPlans";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>My WorkoutPlans</h1>
+<hr />
+
+<div class="card genericCardContainer flexCenterRow flexWrap">
+    @if (Model.Any())
+    {
+        @foreach (WorkoutPlan workoutPlan in Model)
+        {
+            <div class="genericCardItem flexCenterColumn  hover-container">
+                <h2>@Html.DisplayFor(modelItem => workoutPlan.Name)</h2>
+                <p>@Html.DisplayFor(modelItem => workoutPlan.Description)</p>
+
+                <a asp-controller="WorkoutPlan" asp-action="ListWorkoutPlanExercises" asp-route-id="@workoutPlan.Id" class="btn btn-primary hidden-button">Details</a>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="genericCardItem flexCenterColumn">
+            <h4>You Don't have any WorkoutPlans</h4>
+        </div>
+    }
+
+</div>
+<div class="card genericCardItem flexCenterRow">
+    <a asp-controller="Workout" asp-action="ListClienteWorkouts" class="btn btn-primary">Workout History</a>
+</div>

@@ -1,0 +1,74 @@
+﻿@model IEnumerable<FrontEndWeb.Models.SubscriptionProductPurchaseRecord>
+
+@{
+    ViewData["Title"] = "ProfilePurchaseRecords";
+}
+
+
+<div style="display:flex; flex-direction:row; min-width:max-content">
+    @await Html.PartialAsync("Partial/_ProfileNavigationMenu")
+
+    <div>
+        <h1>MyAccount</h1>
+        <h4>Purchase Records</h4>
+        <hr />
+
+        <div class="genericCardContainer flexCenterRow flexWrap">
+            @if (Model.Any())
+            {
+                <div class="genericCardItem flexCenterColumn">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Id)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.PurchaseDate)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.PurchasePrice)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.PurchaseTime)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.SubscriptionProductId)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PurchaseDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PurchasePrice)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PurchaseTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SubscriptionProductId)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="genericCardItem flexCenterColumn">
+                    <h4>You Don't Have Purchase Records</h4>
+                </div>
+            }
+        </div>
+    </div>
+</div>
